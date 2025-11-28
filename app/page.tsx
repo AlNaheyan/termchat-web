@@ -1,3 +1,4 @@
+import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -6,8 +7,11 @@ import { Terminal, Users, MessageCircle, Lock, Upload, Zap, Github, ArrowRight }
 import { TerminalDemo } from "@/components/terminal-demo"
 import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern"
 import { cn } from "@/lib/utils"
+import { getLatestRelease } from "@/lib/releases"
 
-export default function Home() {
+export default async function Home() {
+  const release = await getLatestRelease()
+
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
@@ -50,7 +54,7 @@ export default function Home() {
         />
         <div className="relative max-w-4xl mx-auto text-center space-y-8 z-10">
           <Badge variant="secondary" className="font-mono">
-            v1.0 Now Available
+            {release.tag}
           </Badge>
 
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-balance">

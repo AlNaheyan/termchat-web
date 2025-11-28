@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { getLatestRelease } from "@/lib/releases"
 
 function CodeBlock({ children }: { children: React.ReactNode }) {
   return (
@@ -13,7 +14,10 @@ function CodeBlock({ children }: { children: React.ReactNode }) {
   )
 }
 
-export default function InstallationPage() {
+export default async function InstallationPage() {
+  const release = await getLatestRelease()
+  const { downloads } = release
+
   return (
     <div className="min-h-screen bg-background">
       <div className="border-b border-border bg-muted/30">
@@ -34,6 +38,9 @@ export default function InstallationPage() {
               Follow these steps to install Termchat across platforms. Start with the one-line script or pick a manual
               download for your OS. Content pulled from the Termchat user guide.
             </p>
+            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-3 py-1 text-xs uppercase tracking-wide text-muted-foreground">
+              Latest release: <span className="font-mono text-foreground">{release.tag}</span>
+            </div>
             <div className="flex flex-wrap gap-3">
               <Button asChild>
                 <Link href="#quick-install">Jump to quick install</Link>
@@ -57,6 +64,38 @@ export default function InstallationPage() {
             <code className="font-mono text-sm">/usr/local/bin/termchat</code>, and verify it works.
           </p>
           <CodeBlock>curl -fsSL https://raw.githubusercontent.com/AlNaheyan/termchat/main/install.sh | sh</CodeBlock>
+          <div className="flex flex-wrap gap-3">
+            <Button asChild variant="secondary" size="sm" className="gap-2">
+              <a href={downloads.macAmd64} target="_blank" rel="noopener noreferrer">
+                <Download className="h-4 w-4" />
+                macOS Intel
+              </a>
+            </Button>
+            <Button asChild variant="secondary" size="sm" className="gap-2">
+              <a href={downloads.macArm64} target="_blank" rel="noopener noreferrer">
+                <Download className="h-4 w-4" />
+                macOS Apple Silicon
+              </a>
+            </Button>
+            <Button asChild variant="secondary" size="sm" className="gap-2">
+              <a href={downloads.linuxAmd64} target="_blank" rel="noopener noreferrer">
+                <Download className="h-4 w-4" />
+                Linux AMD64
+              </a>
+            </Button>
+            <Button asChild variant="secondary" size="sm" className="gap-2">
+              <a href={downloads.linuxArm64} target="_blank" rel="noopener noreferrer">
+                <Download className="h-4 w-4" />
+                Linux ARM64
+              </a>
+            </Button>
+            <Button asChild variant="secondary" size="sm" className="gap-2">
+              <a href={downloads.windowsAmd64} target="_blank" rel="noopener noreferrer">
+                <Download className="h-4 w-4" />
+                Windows
+              </a>
+            </Button>
+          </div>
           <ul className="list-disc list-inside text-sm text-muted-foreground space-y-1">
             <li>Auto-detects Intel/ARM on macOS/Linux.</li>
             <li>Downloads the latest release and makes it executable.</li>
@@ -90,7 +129,7 @@ export default function InstallationPage() {
                   </CardHeader>
                   <CardContent className="space-y-3">
                     <CodeBlock>
-                      {`curl -L https://github.com/AlNaheyan/termchat/releases/latest/download/termchat-macos-amd64 -o termchat
+                      {`curl -L ${downloads.macAmd64} -o termchat
 chmod +x termchat
 sudo mv termchat /usr/local/bin/`}
                     </CodeBlock>
@@ -105,7 +144,7 @@ sudo mv termchat /usr/local/bin/`}
                   </CardHeader>
                   <CardContent className="space-y-3">
                     <CodeBlock>
-                      {`curl -L https://github.com/AlNaheyan/termchat/releases/latest/download/termchat-macos-arm64 -o termchat
+                      {`curl -L ${downloads.macArm64} -o termchat
 chmod +x termchat
 sudo mv termchat /usr/local/bin/`}
                     </CodeBlock>
@@ -141,10 +180,10 @@ source ~/.zshrc`}
                 <CardContent className="space-y-3">
                   <CodeBlock>
                     {`# AMD64
-curl -L https://github.com/AlNaheyan/termchat/releases/latest/download/termchat-linux-amd64 -o termchat
+curl -L ${downloads.linuxAmd64} -o termchat
 
 # ARM64 (e.g., Raspberry Pi)
-curl -L https://github.com/AlNaheyan/termchat/releases/latest/download/termchat-linux-arm64 -o termchat
+curl -L ${downloads.linuxArm64} -o termchat
 chmod +x termchat
 sudo mv termchat /usr/local/bin/`}
                   </CodeBlock>
@@ -194,7 +233,7 @@ source ~/.bashrc`}
                   </ol>
                   <CodeBlock>
                     {`# PowerShell download
-Invoke-WebRequest -Uri "https://github.com/AlNaheyan/termchat/releases/latest/download/termchat-windows-amd64.exe" -OutFile "termchat.exe"
+Invoke-WebRequest -Uri "${downloads.windowsAmd64}" -OutFile "termchat.exe"
 
 # Move with admin rights
 Move-Item termchat.exe "C:\\Program Files\\termchat\\termchat.exe"
@@ -206,7 +245,7 @@ Move-Item termchat.exe "$userBin\\termchat.exe"`}
                   </CodeBlock>
                   <CodeBlock>
                     {`# Optional curl download
-curl -L https://github.com/AlNaheyan/termchat/releases/latest/download/termchat-windows-amd64.exe -o termchat.exe`}
+curl -L ${downloads.windowsAmd64} -o termchat.exe`}
                   </CodeBlock>
                   <div className="text-xs text-muted-foreground">
                     Defender warning? Choose "More info" → "Run anyway" or add an exception.
