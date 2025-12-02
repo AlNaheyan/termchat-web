@@ -6,25 +6,31 @@ import { Button } from "@/components/ui/button"
 
 const guides = [
   {
+    title: "Getting started",
+    description: "Overview of the latest features, quick start summary, and first launch flow.",
+    href: "/docs/getting-started",
+    badge: "New",
+  },
+  {
     title: "Installation",
-    description: "Install via script or manual steps, set PATH, and fix common issues.",
+    description: "One-line install, manual downloads, PATH setup, and update notifications.",
     href: "/docs/installation",
     badge: "Start here",
   },
   {
-    title: "First launch",
-    description: "Log in, sign up, and understand the home screen.",
-    href: "/docs/installation#first-launch",
+    title: "Using Termchat",
+    description: "Authentication rules, friends and rooms, chat commands, and shortcuts.",
+    href: "/docs/usage",
   },
   {
-    title: "Keyboard shortcuts",
-    description: "Move fast with navigation and chat shortcuts.",
-    href: "/docs/installation#keyboard-shortcuts",
+    title: "File sharing & privacy",
+    description: "Upload/download flow, file picker, limits, and data handling.",
+    href: "/docs/files-and-privacy",
   },
   {
-    title: "Troubleshooting",
-    description: "Fix common install and connection issues quickly.",
-    href: "/docs/installation#troubleshooting",
+    title: "Troubleshooting & help",
+    description: "Fix install, update, connection, and account issues with guide-backed tips.",
+    href: "/docs/troubleshooting",
   },
 ]
 
@@ -39,8 +45,8 @@ export default function DocsHome() {
           <div className="space-y-4 max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight">Termchat Docs</h1>
             <p className="text-lg text-muted-foreground">
-              Setup guides, shortcuts, and troubleshooting collected from the Termchat user guide. Start with installation
-              or jump to the section you need.
+              Documentation synced with the latest Termchat user guide: installation, authentication, friends and chat
+              flows, file sharing, and troubleshooting. Start with installation or jump to the section you need.
             </p>
             <div className="flex flex-wrap gap-3">
               <Button asChild size="lg">

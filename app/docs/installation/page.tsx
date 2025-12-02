@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ArrowLeft, CheckCircle2, Download, Laptop, Terminal } from "lucide-react"
+import { ArrowLeft, CheckCircle2, Download, Laptop, RefreshCw, Terminal } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -317,6 +317,49 @@ where termchat    # Windows
 termchat --version
 termchat          # launch and see the auth menu`}
           </CodeBlock>
+        </section>
+
+        <section id="updates" className="space-y-4">
+          <div className="flex items-center gap-2">
+            <RefreshCw className="h-5 w-5 text-primary" />
+            <h2 className="text-2xl font-semibold">Updates and notifications</h2>
+          </div>
+          <p className="text-muted-foreground">
+            Termchat includes built-in update checks and a one-command upgrader, matching the flow described in the user
+            guide.
+          </p>
+          <div className="grid md:grid-cols-2 gap-4">
+            <Card className="border-border">
+              <CardHeader>
+                <CardTitle className="text-lg">Upgrade in-place</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3 text-sm text-muted-foreground">
+                <CodeBlock>termchat --update</CodeBlock>
+                <p>Downloads the correct binary for your platform, swaps it in, and verifies the result.</p>
+                <div className="text-xs">
+                  Installed to <code className="font-mono text-xs">/usr/local/bin</code>? Run with sudo if you see a
+                  permission error.
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="border-border">
+              <CardHeader>
+                <CardTitle className="text-lg">Launch-time notifications</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2 text-sm text-muted-foreground">
+                <p>
+                  Starting with v1.3.0, Termchat checks for updates when it starts. If a newer release exists, you'll
+                  see:
+                </p>
+                <CodeBlock>🚀 Update available! v1.3.0 → v1.3.1 - Run: termchat --update</CodeBlock>
+                <ul className="list-disc list-inside space-y-1">
+                  <li>Non-blocking: you can start chatting immediately.</li>
+                  <li>Silent when offline: no errors appear if you are disconnected.</li>
+                  <li>Opt-in: upgrade only when you choose.</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
         </section>
 
         <section id="first-launch" className="space-y-3">
